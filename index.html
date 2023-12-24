@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link href="https://fonts.cdnfonts.com/css/lower-pixel" rel="stylesheet">
+                
+    <link rel="stylesheet" href="static/mystyle.css" />
+    <title>actavis loves to skid</title>
+</head>
+<body>
+    <div id="custom-cursor" style="position: absolute; width: 20px; height: 20px; border-radius: 50%; pointer-events: none;"></div>
+    <main class="scene"></main>
+  <div class="content">
+    <img class="pfp" src="static/media/pfp.png"></img>
+    <p class="username">actavis</p>
+    <div class="typing-container">
+      <p id="description"></p>
+      <div class="cursor" id="cursor"></div>
+    </div>
+    <div class="divider"></div>
+    <div class="socials"> 
+      <a id="social" class="insta" href="https://t.me/actavislol" target="_blank">
+        <img id="socialicon" src="static/media/telegram.png" alt="">
+    </a>
+    <a id="social" class="rblx" href="https://discord.dog/365629662535352342" target="_blank">
+        <img id="socialicon" src="static/media/discord.png" alt="">
+    </a>
+
+    <a id="social" class="steam" href="https://open.spotify.com/track/5bOTccpm8dRM3lA2LMScrF?si=f90100d9c8b44bc2" target="_blank">
+        <img id="socialicon" src="static/media/spotify.png" alt="">
+    </a>
+    </div>
+</div>
+<script>
+ document.addEventListener("DOMContentLoaded", function() {
+    const descriptionElement = document.getElementById("description");
+    const cursorElement = document.getElementById("cursor");
+    const descriptions = [
+        "Robert Colbert for president!",
+        "The fuck did you say to be you little shit",
+        "I got booters connected to my bawtnet",
+    ];
+
+    let currentDescriptionIndex = 0;
+    let index = 0;
+
+    function type() {
+        descriptionElement.textContent += descriptions[currentDescriptionIndex][index];
+        index++;
+
+        if (index < descriptions[currentDescriptionIndex].length) {
+            setTimeout(type, 50);
+        } else {
+            setTimeout(deleteText, 1000);
+        }
+    }
+
+    function deleteText() {
+        if (index > 0) {
+            descriptionElement.textContent = descriptions[currentDescriptionIndex].substring(0, index - 1);
+            index--;
+
+            setTimeout(deleteText, 50);
+        } else {
+            currentDescriptionIndex = (currentDescriptionIndex + 1) % descriptions.length;
+            setTimeout(type, 500);
+        }
+    }
+
+    type();
+});
+
+</script>
+<script src="static/three.min.js"></script>
+    <script>
+
+let camera, scene, renderer;
+    let snowflakes = [];
+
+    init();
+    animate();
+
+    function init() {
+      camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1000);
+      camera.position.z = 100;
+
+      scene = new THREE.Scene();
+
+      renderer = new THREE.WebGLRenderer({ alpha: true});
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      const snowflakeGeometry = new THREE.CircleGeometry(0.1, 999);
+      const snowflakeMaterial = new THREE.PointsMaterial({
+        color: 0xffffff,
+      });
+
+      for (let i = 0; i < 670; i++) {
+        const snowflake = new THREE.Mesh(snowflakeGeometry, snowflakeMaterial);
+        snowflake.position.x = (Math.random() - 0.5) * 200;
+        snowflake.position.y = (Math.random() - 0.5) * 200;
+        snowflake.position.z = (Math.random() - 0.5) * 200;
+        snowflakes.push(snowflake);
+        scene.add(snowflake);
+      }
+
+      window.addEventListener('resize', onWindowResize);
+      document.addEventListener('mousemove', onMouseMove);
+    }
+
+    function animate() {
+  requestAnimationFrame(animate);
+
+  snowflakes.forEach((snowflake) => {
+    snowflake.rotation.z += 0.01;
+    snowflake.position.y -= 0.5;
+
+    const respawnY = 50;
+
+    if (snowflake.position.y < -100) {
+      snowflake.position.set((Math.random() - 0.5) * 200, respawnY, (Math.random() - 0.5) * 200);
+    }
+  });
+
+  renderer.render(scene, camera);
+}
+
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function onMouseMove(event) {
+  const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+  const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  snowflakes.forEach((snowflake) => {
+    const distance = snowflake.position.distanceTo(new THREE.Vector3(mouseX * 100, mouseY * 100, snowflake.position.z));
+    const maxDistance = 15;
+    
+  });
+}
+
+</script>
+    </script>
+
+</body>
+</html>
