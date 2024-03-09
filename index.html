@@ -153,22 +153,19 @@
         <a href="https://t.me/layer7mitigation" class="social-icon"><img src="icons/telegram.png"/></a>
     </div>
 
-    <video id="video-background" autoplay muted loop>
+    <video id="video-background" loop>
         <source src="files/video.mp4" type="video/mp4">
     </video>
-
-    <audio id="audio-background" autoplay loop>
-        <source src="files/audio.mp3" type="audio/mpeg">
-    </audio>
 
     <script>
         document.getElementById("button").addEventListener("click", function () {
             var button = this;
             button.style.animation = "fadeout 1s forwards";
 
+            var bgAudio = document.getElementById("video-background"); 
             document.getElementById("blur-box").style.display = "block";
             document.getElementById("video-background").style.display = "block";
-            document.getElementById("audio-background").play();
+            bgAudio.play();
         });
     </script>
 </body>
